@@ -23,5 +23,23 @@ services:
     ports:
       - "127.0.0.1:8000:8000"
 
+  web:
+    build: ./web
+    restart: unless-stopped
+    # Все переменные из .env (нужны AUTH_SECRET и ADMIN_* для npm run seed:admin),
+    # но адрес базы внутри compose другой - хост db
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      # Auth.js в режиме production требует явно разрешить адрес сайта
+      AUTH_TRUST_HOST: "true"
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+      checker:
+        condition: service_started
+
 volumes:
   db-data:
