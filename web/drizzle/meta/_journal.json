@@ -15,6 +15,13 @@
       "when": 1790365852707,
       "tag": "0001_task_bank",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1790366419377,
+      "tag": "0002_media",
+      "breakpoints": true
     }
   ]
 }

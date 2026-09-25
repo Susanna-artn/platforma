@@ -19,6 +19,9 @@ export function AppHeader({ user }: { user: CurrentUser }) {
             <Link href="/admin/tasks" className="hover:underline">
               Задачи
             </Link>
+            <Link href="/admin/media" className="hover:underline">
+              Картинки
+            </Link>
           </nav>
         )}
       </div>

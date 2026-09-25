@@ -11,6 +11,9 @@ RUN npm ci
 COPY . .
 RUN npm run build && chown -R node:node /app/.next
 
+# Папка для картинок задач (сюда подключается volume media-data)
+RUN mkdir -p /data/media && chown node:node /data/media
+
 USER node
 EXPOSE 3000
 # Перед запуском применяем миграции базы

@@ -9,7 +9,7 @@ const example = readFileSync(
   "utf8",
 );
 
-const empty: ExistingState = { topics: new Map(), taskCodes: new Set() };
+const empty: ExistingState = { topics: new Map(), taskCodes: new Set(), mediaNames: new Set() };
 
 const topic = { code: "m.alg.quadratic", subject: "math", section: "Алгебра", name: "Квадратные" };
 const task = {
@@ -44,6 +44,7 @@ describe("пример из docs/examples", () => {
     const existing: ExistingState = {
       topics: new Map(file!.topics!.map((t) => [t.code, t.subject])),
       taskCodes: new Set(file!.tasks!.map((t) => t.code)),
+      mediaNames: new Set(),
     };
     const report = planImport(example, existing).report;
     expect(report.newTasks).toEqual([]);
@@ -74,6 +75,7 @@ describe("ошибки файла", () => {
     const existing: ExistingState = {
       topics: new Map<string, Subject>([["m.alg.quadratic", "math"]]),
       taskCodes: new Set(),
+      mediaNames: new Set(),
     };
     expect(plan({ tasks: [task] }, existing).errors).toEqual([]);
   });
@@ -86,6 +88,7 @@ describe("ошибки файла", () => {
     const existing: ExistingState = {
       topics: new Map<string, Subject>([["m.alg.quadratic", "physics"]]),
       taskCodes: new Set(),
+      mediaNames: new Set(),
     };
     expect(plan({ topics: [topic] }, existing).errors[0]).toMatch(/предмет существующей темы/);
   });
@@ -176,5 +179,25 @@ describe("ответы", () => {
 
   it("неизвестный тип", () => {
     bad({ type: "matrix", value: "1" }, /answer\.type/);
+  });
+});
+
+describe("картинки в задачах", () => {
+  const img = "a".repeat(32) + ".png";
+
+  it("загруженная картинка подходит", () => {
+    const existing = { ...empty, mediaNames: new Set([img]) };
+    const file = { topics: [topic], tasks: [{ ...task, statement: `Рис.: ![схема](/media/${img})` }] };
+    expect(plan(file, existing).errors).toEqual([]);
+  });
+
+  it("незагруженная картинка - ошибка", () => {
+    expect(errorsFor({ solution: `![](/media/${img})` })[0]).toMatch(/не загружена/);
+  });
+
+  it("картинка с чужого сайта - ошибка", () => {
+    expect(errorsFor({ statement: "![](https://example.com/a.png)" })[0]).toMatch(
+      /не из нашего хранилища/,
+    );
   });
 });

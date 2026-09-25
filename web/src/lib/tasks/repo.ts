@@ -1,18 +1,20 @@
 // Работа с банком задач в базе. Права проверяются в server actions и страницах.
 import { and, asc, eq, sql, type SQL } from "drizzle-orm";
 import { db } from "@/db";
-import { tasks, topics, type Exam, type Subject, type TaskStatus } from "@/db/schema";
+import { media, tasks, topics, type Exam, type Subject, type TaskStatus } from "@/db/schema";
 import type { ExistingState } from "./plan";
 import { maxScore, type ImportFile } from "./schema";
 
 export async function loadExistingState(): Promise<ExistingState> {
-  const [topicRows, taskRows] = await Promise.all([
+  const [topicRows, taskRows, mediaRows] = await Promise.all([
     db.select({ code: topics.code, subject: topics.subject }).from(topics),
     db.select({ code: tasks.code }).from(tasks),
+    db.select({ fileName: media.fileName }).from(media),
   ]);
   return {
     topics: new Map(topicRows.map((t) => [t.code, t.subject])),
     taskCodes: new Set(taskRows.map((t) => t.code)),
+    mediaNames: new Set(mediaRows.map((m) => m.fileName)),
   };
 }
 

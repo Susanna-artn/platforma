@@ -2,12 +2,29 @@
 // базы передаётся параметром, поэтому функцию легко тестировать.
 import type { z } from "zod";
 import type { Subject } from "@/db/schema";
-import { importFileSchema, type ImportFile } from "./schema";
+import { imageSources } from "@/lib/media";
+import { importFileSchema, type ImportFile, type TaskInput } from "./schema";
+
+// Картинки только из нашего хранилища и только уже загруженные
+function imageErrors(task: TaskInput, mediaNames: Set<string>): string[] {
+  const texts = [task.statement, task.solution ?? "", ...(task.criteria ?? []).map((c) => c.description)];
+  const errors: string[] = [];
+  for (const src of texts.flatMap(imageSources)) {
+    if (!src.startsWith("/media/")) {
+      errors.push(`картинка ${src} не из нашего хранилища - загрузите её в разделе «Картинки»`);
+    } else if (!mediaNames.has(src.slice("/media/".length))) {
+      errors.push(`картинка ${src} не загружена`);
+    }
+  }
+  return errors;
+}
 
 export type ExistingState = {
   // код темы -> предмет
   topics: Map<string, Subject>;
   taskCodes: Set<string>;
+  // Имена загруженных картинок
+  mediaNames: Set<string>;
 };
 
 export type ImportReport = {
@@ -97,6 +114,7 @@ export function planImport(text: string, existing: ExistingState): ImportPlan {
     } else if (subject !== task.subject) {
       errors.push(`${label}: тема ${task.topic} относится к другому предмету (${subject})`);
     }
+    for (const e of imageErrors(task, existing.mediaNames)) errors.push(`${label}: ${e}`);
   });
 
   const report: ImportReport = {

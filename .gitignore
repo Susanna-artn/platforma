@@ -20,3 +20,6 @@ __pycache__/
 .DS_Store
 .idea/
 .vscode/
+
+# Картинки задач при локальной разработке
+/media/

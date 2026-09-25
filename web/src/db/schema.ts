@@ -130,6 +130,18 @@ export const tasks = pgTable(
   ],
 );
 
+// Картинки для задач. Сам файл лежит в MEDIA_DIR под именем fileName
+// (хэш содержимого + расширение), здесь - описание.
+export const media = pgTable("media", {
+  id: uuid().primaryKey().defaultRandom(),
+  fileName: text().notNull().unique(),
+  originalName: text().notNull(),
+  mimeType: text().notNull(),
+  sizeBytes: integer().notNull(),
+  uploadedBy: uuid().references(() => users.id),
+  createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+});
+
 export type Role = (typeof roleEnum.enumValues)[number];
 export type Subject = (typeof subjectEnum.enumValues)[number];
 export type Exam = (typeof examEnum.enumValues)[number];
