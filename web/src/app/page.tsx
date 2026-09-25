@@ -1,7 +1,9 @@
-export default function Home() {
-  return (
-    <main className="mx-auto max-w-xl p-8">
-      <h1 className="text-2xl font-semibold">Подготовка по математике и физике</h1>
-    </main>
-  );
+import { redirect } from "next/navigation";
+import { ROLE_HOME } from "@/lib/access";
+import { requireUser } from "@/lib/dal";
+
+// Главная просто отправляет в раздел своей роли
+export default async function Home() {
+  const user = await requireUser();
+  redirect(ROLE_HOME[user.role]);
 }
