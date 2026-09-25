@@ -19,7 +19,7 @@ export type MediaExt = keyof typeof MEDIA_TYPES;
 export const MEDIA_NAME = /^[0-9a-f]{32}\.(png|jpg|webp|gif)$/;
 
 export function mediaDir(): string {
-  return process.env.MEDIA_DIR ?? path.resolve(process.cwd(), "../media");
+  return process.env.MEDIA_DIR ?? path.resolve(/* turbopackIgnore: true */ process.cwd(), "../media");
 }
 
 // Тип определяем по первым байтам файла, а не по расширению или заявлению браузера.
@@ -41,15 +41,15 @@ export async function saveMediaFile(fileName: string, bytes: Uint8Array) {
   const dir = mediaDir();
   await mkdir(dir, { recursive: true });
   // Сначала во временный файл, потом переименование: не бывает недописанных файлов
-  const tmp = path.join(dir, `.${randomUUID()}.tmp`);
+  const tmp = path.join(/* turbopackIgnore: true */ dir, `.${randomUUID()}.tmp`);
   await writeFile(tmp, bytes);
-  await rename(tmp, path.join(dir, fileName));
+  await rename(tmp, path.join(/* turbopackIgnore: true */ dir, fileName));
 }
 
 export async function readMediaFile(fileName: string): Promise<Buffer | null> {
   if (!MEDIA_NAME.test(fileName)) return null;
   try {
-    return await readFile(path.join(mediaDir(), fileName));
+    return await readFile(path.join(/* turbopackIgnore: true */ mediaDir(), fileName));
   } catch {
     return null;
   }
