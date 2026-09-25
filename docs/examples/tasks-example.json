@@ -1,0 +1,119 @@
+{
+  "topics": [
+    { "code": "m.alg.quadratic", "subject": "math", "section": "Алгебра", "name": "Квадратные уравнения" },
+    { "code": "m.alg.expressions", "subject": "math", "section": "Алгебра", "name": "Преобразование выражений" },
+    { "code": "m.alg.inequalities", "subject": "math", "section": "Алгебра", "name": "Неравенства" },
+    { "code": "m.alg.systems", "subject": "math", "section": "Алгебра", "name": "Системы уравнений" },
+    { "code": "m.alg.irrational", "subject": "math", "section": "Алгебра", "name": "Иррациональные уравнения" },
+    { "code": "m.alg.logarithms", "subject": "math", "section": "Алгебра", "name": "Логарифмы" },
+    { "code": "p.mech.kinematics", "subject": "physics", "section": "Механика", "name": "Кинематика" },
+    { "code": "p.mech.dynamics", "subject": "physics", "section": "Механика", "name": "Динамика" },
+    { "code": "p.el.dc", "subject": "physics", "section": "Электродинамика", "name": "Постоянный ток" }
+  ],
+  "tasks": [
+    {
+      "code": "m9-quad-001",
+      "subject": "math",
+      "grade": 9,
+      "topic": "m.alg.quadratic",
+      "exam": "oge",
+      "examPart": 1,
+      "difficulty": 1,
+      "status": "published",
+      "statement": "Решите уравнение $x^2 - 5x + 6 = 0$.",
+      "answer": { "type": "roots", "values": ["2", "3"] },
+      "solution": "По теореме Виета $x_1 + x_2 = 5$, $x_1 x_2 = 6$, откуда $x_1 = 2$, $x_2 = 3$."
+    },
+    {
+      "code": "m9-expr-001",
+      "subject": "math",
+      "grade": 9,
+      "topic": "m.alg.expressions",
+      "difficulty": 1,
+      "statement": "Разложите на множители: $x^2 - 1$.",
+      "answer": { "type": "expression", "value": "(x - 1)*(x + 1)" },
+      "solution": "Разность квадратов: $a^2 - b^2 = (a - b)(a + b)$, поэтому $x^2 - 1 = (x - 1)(x + 1)$."
+    },
+    {
+      "code": "m10-ineq-001",
+      "subject": "math",
+      "grade": 10,
+      "topic": "m.alg.inequalities",
+      "difficulty": 2,
+      "statement": "Решите неравенство\n\n$$\\frac{x - 2}{x + 1} > 0.$$",
+      "answer": { "type": "interval", "value": "(-oo; -1) U (2; +oo)" },
+      "solution": "Метод интервалов: числитель обращается в ноль при $x = 2$, знаменатель - при $x = -1$. Дробь положительна при $x < -1$ и при $x > 2$."
+    },
+    {
+      "code": "m9-sys-001",
+      "subject": "math",
+      "grade": 9,
+      "topic": "m.alg.systems",
+      "difficulty": 1,
+      "statement": "Решите систему уравнений\n\n$$\\begin{cases} x + y = 3, \\\\ x - y = 1. \\end{cases}$$\n\nВ ответе запишите пару $(x; y)$.",
+      "answer": { "type": "tuple", "values": ["2", "1"] },
+      "solution": "Сложим уравнения: $2x = 4$, $x = 2$. Тогда $y = 3 - 2 = 1$."
+    },
+    {
+      "code": "m11-log-001",
+      "subject": "math",
+      "grade": 11,
+      "topic": "m.alg.logarithms",
+      "exam": "ege_base",
+      "examPart": 1,
+      "difficulty": 1,
+      "statement": "Найдите значение выражения $\\log_2 8 + \\sqrt{16}$.",
+      "answer": { "type": "number", "value": 7 },
+      "solution": "$\\log_2 8 = 3$, $\\sqrt{16} = 4$, сумма равна $7$."
+    },
+    {
+      "code": "m11-irr-001",
+      "subject": "math",
+      "grade": 11,
+      "topic": "m.alg.irrational",
+      "exam": "ege_profile",
+      "examPart": 2,
+      "difficulty": 2,
+      "statement": "Решите уравнение $\\sqrt{x + 2} = x$.",
+      "answer": { "type": "steps", "final": { "type": "roots", "values": ["2"] } },
+      "solution": "Условие: $x \\ge 0$. Возведём в квадрат: $x + 2 = x^2$, то есть $x^2 - x - 2 = 0$, откуда $x = 2$ или $x = -1$. Условию $x \\ge 0$ удовлетворяет только $x = 2$.",
+      "criteria": [
+        { "points": 2, "description": "Обоснованно получен верный ответ" },
+        { "points": 1, "description": "Получены оба корня квадратного уравнения, но посторонний корень не отброшен" },
+        { "points": 0, "description": "Решение не соответствует ни одному из критериев выше" }
+      ]
+    },
+    {
+      "code": "p9-kin-001",
+      "subject": "physics",
+      "grade": 9,
+      "topic": "p.mech.kinematics",
+      "exam": "oge",
+      "examPart": 1,
+      "difficulty": 1,
+      "statement": "Автомобиль за $10$ с равномерно разогнался из состояния покоя до скорости $20$ м/с. Найдите модуль ускорения автомобиля.",
+      "answer": { "type": "quantity", "value": 2, "unit": "m/s**2", "relativeTolerance": 0.01 },
+      "solution": "$a = \\dfrac{v - v_0}{t} = \\dfrac{20 - 0}{10} = 2$ м/с$^2$."
+    },
+    {
+      "code": "p9-dc-001",
+      "subject": "physics",
+      "grade": 9,
+      "topic": "p.el.dc",
+      "difficulty": 1,
+      "statement": "Резисторы сопротивлением $2$ Ом и $3$ Ом соединены последовательно и подключены к источнику напряжения $10$ В. Найдите силу тока в цепи.",
+      "answer": { "type": "quantity", "value": 2, "unit": "A" },
+      "solution": "При последовательном соединении $R = 2 + 3 = 5$ Ом. По закону Ома $I = U / R = 10 / 5 = 2$ А."
+    },
+    {
+      "code": "p10-dyn-001",
+      "subject": "physics",
+      "grade": 10,
+      "topic": "p.mech.dynamics",
+      "difficulty": 1,
+      "statement": "Выберите два верных утверждения.\n\n1. Если на тело не действуют силы, оно обязательно покоится.\n2. Ускорение тела прямо пропорционально равнодействующей приложенных к нему сил.\n3. Сила трения скольжения не зависит от силы нормального давления.\n4. Два тела действуют друг на друга с силами, равными по модулю и противоположными по направлению.\n5. В классической механике масса тела зависит от его скорости.",
+      "answer": { "type": "digits", "value": "24", "ordered": false },
+      "solution": "Верны 2 (второй закон Ньютона) и 4 (третий закон Ньютона). Утверждение 1 неверно: тело может двигаться равномерно и прямолинейно."
+    }
+  ]
+}
