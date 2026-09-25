@@ -1,6 +1,5 @@
 // Создаёт первого администратора из переменных ADMIN_* в .env.
 // Запуск: npm run seed:admin
-import "../env-config";
 import { eq } from "drizzle-orm";
 import { db, pgClient } from "@/db";
 import { users } from "@/db/schema";
