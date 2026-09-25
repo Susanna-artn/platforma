@@ -20,7 +20,7 @@ export type ImportReport = {
 
 export type ImportPlan = { report: ImportReport; file: ImportFile | null };
 
-function emptyReport(errors: string[]): ImportReport {
+export function emptyReport(errors: string[]): ImportReport {
   return { errors, newTopics: [], updatedTopics: [], newTasks: [], updatedTasks: [] };
 }
 
